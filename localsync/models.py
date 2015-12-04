@@ -1,0 +1,417 @@
+from django.db import models
+
+
+class Centers(models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    name = models.CharField(max_length=50, blank=True, null=True)
+    name_e = models.CharField(max_length=50, blank=True, null=True)
+    prods = models.BigIntegerField(blank=True, null=True)
+    sman = models.ForeignKey('SalesMen', db_column='sman', blank=True, null=True)
+    cost_center = models.BigIntegerField(blank=True, null=True)
+    acc_branch = models.BigIntegerField(blank=True, null=True)
+    phone1 = models.CharField(max_length=10, blank=True, null=True)
+    phone2 = models.CharField(max_length=10, blank=True, null=True)
+    vaddress = models.CharField(max_length=200, blank=True, null=True)
+    phone = models.CharField(max_length=40, blank=True, null=True)
+    bnkcommaccno = models.BigIntegerField(blank=True, null=True)
+    cntr_salesqtycash = models.NullBooleanField()
+    cntr_salesqtycredit = models.NullBooleanField()
+    cntr_salesrqtycash = models.NullBooleanField()
+    cntr_salesrqtycredit = models.NullBooleanField()
+    cntr_sysdate = models.DateField(blank=True, null=True)
+    cntr_creditcustomer = models.BigIntegerField(blank=True, null=True)
+    cashsales_credit_acc = models.BigIntegerField(blank=True, null=True)
+    printer_nm = models.CharField(max_length=200, blank=True, null=True)
+    cntr_creditnoteacc = models.BigIntegerField(blank=True, null=True)
+    region = models.CharField(max_length=150, blank=True, null=True)
+    center_type = models.IntegerField(blank=True, null=True)
+    default_curr = models.IntegerField(blank=True, null=True)
+    logo_path = models.CharField(max_length=100, blank=True, null=True)
+    logo_blob = models.BinaryField(blank=True, null=True)
+    site_name = models.CharField(max_length=200, blank=True, null=True)
+    bnkcommaccno_old = models.CharField(max_length=40, blank=True, null=True)
+    cashsales_credit_acc_old = models.CharField(max_length=40, blank=True, null=True)
+    cntr_creditnoteacc_old = models.CharField(max_length=40, blank=True, null=True)
+    mgento_order = models.NullBooleanField()
+    fromcategory = models.FloatField(blank=True, null=True)
+    tocategory = models.FloatField(blank=True, null=True)
+    tablescreenwidth = models.FloatField(blank=True, null=True)
+    tablescreenheight = models.FloatField(blank=True, null=True)
+    loadandprintassemitem = models.BigIntegerField(blank=True, null=True)
+    logo2_path = models.CharField(max_length=100, blank=True, null=True)
+    logo3_path = models.CharField(max_length=100, blank=True, null=True)
+    logo2_blob = models.BinaryField(blank=True, null=True)
+    logo3_blob = models.BinaryField(blank=True, null=True)
+    closeorderprint = models.BigIntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'centers'
+
+
+class Issue1(models.Model):
+    class Meta:
+        managed = True
+        db_table = 'issue_1'
+        unique_together = (('code', 'pcenter', 'bilno'),)
+    code = models.IntegerField()
+    vdate = models.DateField(blank=True, null=True)
+    sman = models.ForeignKey('SalesMen', db_column='sman', blank=True, null=True,related_name='sman')
+    pur_order = models.CharField(max_length=30, blank=True, null=True)
+    qutaion = models.BigIntegerField(blank=True, null=True)
+    payment = models.IntegerField(blank=True, null=True)
+    customer_data = models.CharField(max_length=100, blank=True, null=True)
+    customer_name = models.CharField(max_length=800, blank=True, null=True)
+    user_no = models.BigIntegerField(blank=True, null=True)
+    time_stamp = models.DateField()
+    pcenter = models.ForeignKey('Centers', db_column='pcenter')
+    notes_print_falge = models.NullBooleanField()
+    bilno = models.BigIntegerField()
+    custno = models.ForeignKey('Customers', db_column='custno', blank=True, null=True)
+    templet = models.NullBooleanField()
+    rev_ok = models.NullBooleanField()
+    layaway = models.NullBooleanField()
+    deli_date = models.DateField(blank=True, null=True)
+    terms = models.ForeignKey('PaymentTerms', db_column='terms', blank=True, null=True)
+    payed = models.DecimalField(max_digits=15, decimal_places=3, blank=True, null=True)
+    payed1 = models.DecimalField(max_digits=15, decimal_places=3, blank=True, null=True)
+    payed2 = models.DecimalField(max_digits=15, decimal_places=3, blank=True, null=True)
+    pay_ok = models.NullBooleanField()
+    reset_bilno = models.BigIntegerField(blank=True, null=True)
+    step1 = models.NullBooleanField()
+    step2 = models.NullBooleanField()
+    step3 = models.NullBooleanField()
+    step4 = models.NullBooleanField()
+    from_type = models.IntegerField(blank=True, null=True)
+    note6 = models.CharField(max_length=100, blank=True, null=True)
+    note7 = models.CharField(max_length=100, blank=True, null=True)
+    driver_name = models.CharField(max_length=60, blank=True, null=True)
+    car_no = models.CharField(max_length=20, blank=True, null=True)
+    leave_time = models.DateField(blank=True, null=True)
+    note1 = models.CharField(max_length=40, blank=True, null=True)
+    note2 = models.CharField(max_length=40, blank=True, null=True)
+    note3 = models.CharField(max_length=40, blank=True, null=True)
+    note4 = models.CharField(max_length=40, blank=True, null=True)
+    note5 = models.CharField(max_length=40, blank=True, null=True)
+    vtime = models.DateField(blank=True, null=True)
+    hand_time = models.DateField(blank=True, null=True)
+    drv_code = models.ForeignKey('Drivers', db_column='drv_code', blank=True, null=True)
+    cust_no = models.ForeignKey('CashCustomers', db_column='cust_no', blank=True, null=True)
+    return_time = models.DateField(blank=True, null=True)
+    step5 = models.NullBooleanField()
+    cash_delivary = models.ForeignKey('CashDelivary', blank=True, null=True)
+    recieved_flage = models.NullBooleanField()
+    area_code = models.CharField(max_length=20, blank=True, null=True)
+    sector = models.CharField(max_length=30, blank=True, null=True)
+    gada = models.CharField(max_length=30, blank=True, null=True)
+    street = models.CharField(max_length=30, blank=True, null=True)
+    house = models.CharField(max_length=30, blank=True, null=True)
+    flat = models.CharField(max_length=30, blank=True, null=True)
+    floor = models.CharField(max_length=30, blank=True, null=True)
+    cust_tel = models.CharField(max_length=20, blank=True, null=True)
+    bnkcomm = models.FloatField(blank=True, null=True)
+    payment2 = models.DecimalField(max_digits=10, decimal_places=3, blank=True, null=True)
+    payment3 = models.DecimalField(max_digits=10, decimal_places=3, blank=True, null=True)
+    p_date1 = models.DateField(blank=True, null=True)
+    p_date2 = models.DateField(blank=True, null=True)
+    p_date3 = models.DateField(blank=True, null=True)
+    visit_no = models.CharField(max_length=10, blank=True, null=True)
+    temp_date = models.DateField(blank=True, null=True)
+    tel = models.CharField(max_length=20, blank=True, null=True)
+    prod_id = models.BigIntegerField(blank=True, null=True)
+    equipment_code = models.CharField(max_length=10, blank=True, null=True)
+    f11_payed = models.FloatField(blank=True, null=True)
+    costcenter_id = models.BigIntegerField(blank=True, null=True)
+    xcode = models.IntegerField(blank=True, null=True)
+    curr_id = models.BigIntegerField(blank=True, null=True)
+    curr_rate = models.DecimalField(max_digits=15, decimal_places=7, blank=True, null=True)
+    cont_equipment_code = models.CharField(max_length=10, blank=True, null=True)
+    sec_id = models.IntegerField(blank=True, null=True)
+    sec_center = models.BigIntegerField(blank=True, null=True)
+    km_count = models.DecimalField(max_digits=18, decimal_places=3, blank=True, null=True)
+    jop_no = models.CharField(max_length=30, blank=True, null=True)
+    cust_phone1 = models.CharField(max_length=20, blank=True, null=True)
+    cust_phone2 = models.CharField(max_length=20, blank=True, null=True)
+    cust_add = models.CharField(max_length=200, blank=True, null=True)
+    cust_ref = models.CharField(max_length=200, blank=True, null=True)
+    cust_resp = models.CharField(max_length=100, blank=True, null=True)
+    printingtimes = models.IntegerField(blank=True, null=True)
+    total_act_catalog_weight = models.DecimalField(max_digits=20, decimal_places=3, blank=True, null=True)
+    total_price = models.DecimalField(max_digits=20, decimal_places=3, blank=True, null=True)
+    add_voucher_user = models.CharField(max_length=16, blank=True, null=True)
+    lupdate_voucher_user = models.CharField(max_length=16, blank=True, null=True)
+    inv_type = models.NullBooleanField()
+    shift_id = models.BigIntegerField(blank=True, null=True)
+    inv1 = models.BigIntegerField(blank=True, null=True)
+    inv2 = models.BigIntegerField(blank=True, null=True)
+    engineer_commission = models.FloatField(blank=True, null=True)
+    engineer_id = models.BigIntegerField(blank=True, null=True)
+    manager_commission = models.FloatField(blank=True, null=True)
+    manager_id = models.BigIntegerField(blank=True, null=True)
+    salesman_commission = models.FloatField(blank=True, null=True)
+    salesman = models.ForeignKey('SalesMen', blank=True, null=True,related_name='salesman')
+    delivary_method_id = models.BigIntegerField(blank=True, null=True)
+    form_no = models.BigIntegerField(blank=True, null=True)
+    print_ok = models.BigIntegerField(blank=True, null=True)
+    sales_commm = models.FloatField(blank=True, null=True)
+    accept_user = models.CharField(max_length=16, blank=True, null=True)
+    account_item_code = models.BigIntegerField(blank=True, null=True)
+    purchase_order_no = models.BigIntegerField(blank=True, null=True)
+    purchase_order_date = models.DateField(blank=True, null=True)
+    auto_issue = models.NullBooleanField()
+    round_figure = models.FloatField(blank=True, null=True)
+    notes = models.CharField(max_length=4000, blank=True, null=True)
+    order_stat = models.CharField(max_length=255, blank=True, null=True)
+    machine_no = models.FloatField(blank=True, null=True)
+    insur_remaining_amt = models.DecimalField(max_digits=22, decimal_places=6, blank=True, null=True)
+    insur_rem = models.DecimalField(max_digits=22, decimal_places=6, blank=True, null=True)
+    price_type = models.NullBooleanField()
+    price_code = models.BigIntegerField(blank=True, null=True)
+    depr_accno = models.CharField(max_length=14, blank=True, null=True)
+    cashcredit_type = models.CharField(max_length=25, blank=True, null=True)
+    total_cur = models.DecimalField(max_digits=22, decimal_places=8, blank=True, null=True)
+    total = models.DecimalField(max_digits=22, decimal_places=8, blank=True, null=True)
+    discount = models.DecimalField(max_digits=22, decimal_places=8, blank=True, null=True)
+    discount_cur = models.DecimalField(max_digits=22, decimal_places=8, blank=True, null=True)
+    performa_bilno = models.BigIntegerField(blank=True, null=True)
+    performa_pcenter = models.BigIntegerField(blank=True, null=True)
+    cardid = models.BigIntegerField(blank=True, null=True)
+    isrestaurant = models.FloatField(blank=True, null=True)
+    rst_paid = models.FloatField(blank=True, null=True)
+    rst_remain = models.FloatField(blank=True, null=True)
+    order_type = models.NullBooleanField()
+    rst_shift_id = models.BigIntegerField(blank=True, null=True)
+    tableid = models.FloatField(blank=True, null=True)
+    iscocked = models.NullBooleanField()
+    floorid = models.FloatField(blank=True, null=True)
+    sectionid = models.FloatField(blank=True, null=True)
+    addressid = models.BigIntegerField(blank=True, null=True)
+    driver_name_e = models.CharField(max_length=60, blank=True, null=True)
+    orderstateno = models.FloatField(blank=True, null=True)
+    latereasoncode = models.BigIntegerField(blank=True, null=True)
+    discountpercentage = models.DecimalField(max_digits=12, decimal_places=8, blank=True, null=True)
+    orderid = models.BigIntegerField(blank=True, null=True)
+    discount_1 = models.FloatField(blank=True, null=True)
+    discount_c = models.FloatField(blank=True, null=True)
+    coupontypes_no = models.FloatField(blank=True, null=True)
+    coupontypes_id = models.FloatField(blank=True, null=True)
+    discount_v = models.FloatField(blank=True, null=True)
+    void = models.FloatField(blank=True, null=True)
+    void_items_balance = models.FloatField(blank=True, null=True)
+    timestamp_system = models.DateTimeField(primary_key=True,auto_now_add=True)
+    def __iter__(self):
+        for field_name in self._meta.get_all_field_names():
+            try:
+                value = getattr(self, field_name)
+            except:
+                value = None
+            yield (field_name, value)
+
+class SalesMen(models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    name = models.CharField(max_length=50, blank=True, null=True)
+    name_e = models.CharField(max_length=50, blank=True, null=True)
+    pcenter = models.ForeignKey(Centers, db_column='pcenter', blank=True, null=True)
+    acc_branch = models.DecimalField(max_digits=20, decimal_places=5, blank=True, null=True)
+    commission = models.DecimalField(max_digits=20, decimal_places=5, blank=True, null=True)
+    pwd = models.CharField(max_length=100, blank=True, null=True)
+    accno = models.BigIntegerField(blank=True, null=True)
+    guardship_accno = models.BigIntegerField(blank=True, null=True)
+    sort_id = models.FloatField(blank=True, null=True)
+    alt_sman = models.ForeignKey('self', db_column='alt_sman', blank=True, null=True)
+    e_mail = models.CharField(max_length=100, blank=True, null=True)
+    jop_position = models.CharField(max_length=100, blank=True, null=True)
+    phone = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'sales_men'
+
+
+
+
+
+class Customers(models.Model):
+    id = models.FloatField(primary_key=True)
+    name = models.CharField(unique=True, max_length=150, blank=True, null=True)
+    cat1 = models.DecimalField(max_digits=20, decimal_places=3, blank=True, null=True)
+    cat2 = models.DecimalField(max_digits=20, decimal_places=3, blank=True, null=True)
+    caddress = models.CharField(max_length=400, blank=True, null=True)
+    tel1 = models.CharField(max_length=100, blank=True, null=True)
+    tel2 = models.CharField(max_length=100, blank=True, null=True)
+    fax = models.CharField(max_length=100, blank=True, null=True)
+    contact = models.CharField(max_length=100, blank=True, null=True)
+    credit_limit_flage = models.FloatField(blank=True, null=True)
+    credit_limit = models.DecimalField(max_digits=20, decimal_places=3, blank=True, null=True)
+    credit_days = models.DecimalField(max_digits=20, decimal_places=3, blank=True, null=True)
+    sales_man = models.DecimalField(max_digits=20, decimal_places=3, blank=True, null=True)
+    accno = models.BigIntegerField(blank=True, null=True)
+    discount_code = models.DecimalField(max_digits=20, decimal_places=3, blank=True, null=True)
+    name_e = models.CharField(max_length=150, blank=True, null=True)
+    tel4 = models.CharField(max_length=100, blank=True, null=True)
+    jop = models.CharField(max_length=30, blank=True, null=True)
+    national = models.CharField(max_length=30, blank=True, null=True)
+    begin_date = models.DateField(blank=True, null=True)
+    notes = models.CharField(max_length=4000, blank=True, null=True)
+    cid = models.CharField(max_length=12, blank=True, null=True)
+    shoon = models.CharField(max_length=12, blank=True, null=True)
+    tarkhes = models.CharField(max_length=12, blank=True, null=True)
+    op_balance = models.DecimalField(max_digits=20, decimal_places=3, blank=True, null=True)
+    balance = models.DecimalField(max_digits=20, decimal_places=3, blank=True, null=True)
+    temp1 = models.FloatField(blank=True, null=True)
+    temp2 = models.FloatField(blank=True, null=True)
+    temp3 = models.FloatField(blank=True, null=True)
+    temp4 = models.FloatField(blank=True, null=True)
+    email = models.CharField(max_length=100, blank=True, null=True)
+    web_page = models.CharField(max_length=100, blank=True, null=True)
+    temp_date = models.DateField(blank=True, null=True)
+    temp_date2 = models.DateField(blank=True, null=True)
+    credit_days_flage = models.IntegerField(blank=True, null=True)
+    cost_center = models.DecimalField(max_digits=20, decimal_places=5, blank=True, null=True)
+    to_dt = models.DateField(blank=True, null=True)
+    date_flage = models.IntegerField(blank=True, null=True)
+    discount_ratio = models.DecimalField(max_digits=6, decimal_places=3, blank=True, null=True)
+    area_code = models.CharField(max_length=20, blank=True, null=True)
+    sector = models.CharField(max_length=20, blank=True, null=True)
+    gada = models.CharField(max_length=20, blank=True, null=True)
+    street = models.CharField(max_length=50, blank=True, null=True)
+    house = models.CharField(max_length=50, blank=True, null=True)
+    flat = models.CharField(max_length=20, blank=True, null=True)
+    floor = models.CharField(max_length=20, blank=True, null=True)
+    isbranch = models.NullBooleanField()
+    pcenter = models.ForeignKey(Centers, db_column='pcenter', blank=True, null=True)
+    inst_acceptlessthanminval = models.NullBooleanField()
+    ob_balance_f = models.DecimalField(max_digits=22, decimal_places=4, blank=True, null=True)
+    ob_balance_curr = models.IntegerField(blank=True, null=True)
+    cust_manid = models.CharField(max_length=20, blank=True, null=True)
+    section = models.IntegerField(blank=True, null=True)
+    is_stop = models.BigIntegerField(blank=True, null=True)
+    stop_date = models.DateField(blank=True, null=True)
+    stop_reason = models.CharField(max_length=150, blank=True, null=True)
+    stop_user = models.CharField(max_length=100, blank=True, null=True)
+    route = models.IntegerField(blank=True, null=True)
+    account_id = models.BigIntegerField(blank=True, null=True)
+    accno_old = models.CharField(max_length=40, blank=True, null=True)
+    caddress2 = models.CharField(max_length=400, blank=True, null=True)
+    caddress3 = models.CharField(max_length=400, blank=True, null=True)
+    caddress4 = models.CharField(max_length=400, blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'customers'
+
+
+
+
+class PaymentTerms(models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    name = models.CharField(max_length=50, blank=True, null=True)
+    name_e = models.CharField(max_length=50, blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'payment_terms'
+
+
+
+class Drivers(models.Model):
+    drv_code = models.BigIntegerField(primary_key=True)
+    name = models.CharField(max_length=80, blank=True, null=True)
+    name_e = models.CharField(max_length=80, blank=True, null=True)
+    store_id = models.BigIntegerField(blank=True, null=True)
+    pcenter = models.FloatField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'drivers'
+
+
+
+
+
+class CashArea(models.Model):
+    area_code = models.IntegerField(primary_key=True)
+    area_name = models.CharField(max_length=250, blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'cash_area'
+
+
+
+
+
+class CashCustomers(models.Model):
+    cust_no = models.BigIntegerField(primary_key=True)
+    cust_tel = models.CharField(max_length=20, blank=True, null=True)
+    cust_name = models.CharField(max_length=60, blank=True, null=True)
+    area_code = models.ForeignKey(CashArea, db_column='area_code', blank=True, null=True)
+    sector = models.CharField(max_length=20, blank=True, null=True)
+    gada = models.CharField(max_length=20, blank=True, null=True)
+    street = models.CharField(max_length=50, blank=True, null=True)
+    house = models.CharField(max_length=50, blank=True, null=True)
+    flat = models.CharField(max_length=20, blank=True, null=True)
+    floor = models.CharField(max_length=20, blank=True, null=True)
+    beside = models.CharField(max_length=50, blank=True, null=True)
+    cust_tel2 = models.CharField(max_length=20, blank=True, null=True)
+    cust_tel3 = models.CharField(max_length=20, blank=True, null=True)
+    cust_tel4 = models.CharField(max_length=20, blank=True, null=True)
+    cust_tel5 = models.CharField(max_length=20, blank=True, null=True)
+    cust_name_e = models.CharField(max_length=255, blank=True, null=True)
+    cardid = models.BigIntegerField(blank=True, null=True)
+    nat_no = models.BigIntegerField(blank=True, null=True)
+    has_card = models.NullBooleanField()
+    area_code2 = models.BigIntegerField(blank=True, null=True)
+    sector2 = models.CharField(max_length=20, blank=True, null=True)
+    gada2 = models.CharField(max_length=20, blank=True, null=True)
+    street2 = models.CharField(max_length=50, blank=True, null=True)
+    house2 = models.CharField(max_length=50, blank=True, null=True)
+    flat2 = models.CharField(max_length=50, blank=True, null=True)
+    floor2 = models.CharField(max_length=50, blank=True, null=True)
+    beside2 = models.CharField(max_length=50, blank=True, null=True)
+    area_code3 = models.BigIntegerField(blank=True, null=True)
+    sector3 = models.CharField(max_length=20, blank=True, null=True)
+    gada3 = models.CharField(max_length=20, blank=True, null=True)
+    street3 = models.CharField(max_length=50, blank=True, null=True)
+    house3 = models.CharField(max_length=50, blank=True, null=True)
+    flat3 = models.CharField(max_length=50, blank=True, null=True)
+    floor3 = models.CharField(max_length=50, blank=True, null=True)
+    beside3 = models.CharField(max_length=50, blank=True, null=True)
+    area_code4 = models.BigIntegerField(blank=True, null=True)
+    sector4 = models.CharField(max_length=20, blank=True, null=True)
+    gada4 = models.CharField(max_length=20, blank=True, null=True)
+    street4 = models.CharField(max_length=50, blank=True, null=True)
+    house4 = models.CharField(max_length=50, blank=True, null=True)
+    flat4 = models.CharField(max_length=50, blank=True, null=True)
+    floor4 = models.CharField(max_length=50, blank=True, null=True)
+    beside4 = models.CharField(max_length=50, blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'cash_customers'
+
+
+
+
+
+class CashDelivary(models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    total = models.BigIntegerField(blank=True, null=True)
+    vdate = models.DateField(blank=True, null=True)
+    time_stamp = models.DateField(blank=True, null=True)
+    user_no = models.BigIntegerField(blank=True, null=True)
+    from_casher = models.CharField(max_length=100, blank=True, null=True)
+    to_cahser = models.CharField(max_length=100, blank=True, null=True)
+    notes = models.CharField(max_length=200, blank=True, null=True)
+    pcenter = models.ForeignKey(Centers, db_column='pcenter')
+    from_invoice = models.BigIntegerField(blank=True, null=True)
+    to_invoice = models.BigIntegerField(blank=True, null=True)
+    to_date = models.DateField(blank=True, null=True)
+    to_time = models.DateField(blank=True, null=True)
+    from_date = models.DateField(blank=True, null=True)
+    from_time = models.DateField(blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'cash_delivary'
+        unique_together = (('id', 'pcenter'),)
