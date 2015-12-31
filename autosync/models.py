@@ -4447,7 +4447,7 @@ class Issue1Temp(models.Model):
 
 
 class Issue2(models.Model):
-    id = models.BigIntegerField()
+    id = models.BigIntegerField(primary_key=True)
     prods = models.BigIntegerField(blank=True, null=True)
     prodn = models.CharField(max_length=30, blank=True, null=True)
     qty = models.FloatField(blank=True, null=True)

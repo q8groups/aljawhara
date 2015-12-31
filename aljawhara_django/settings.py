@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import djcelery
+djcelery.setup_loader()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -37,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djcelery',
     #'autosync',
     'localsync',
 )
@@ -82,9 +85,15 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
     ,
-    'other': {
+    'branch': {
         'ENGINE': 'django.db.backends.oracle',
         'NAME': '192.168.2.132:1521/CGVILAGE',
+        'USER': 'gl',
+        'PASSWORD': 'gl',
+    },
+      'master': {
+        'ENGINE': 'django.db.backends.oracle',
+        'NAME': '192.168.2.132:1521/HEADOFFICE',
         'USER': 'gl',
         'PASSWORD': 'gl',
     }
@@ -96,7 +105,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Kuwait'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -113,3 +122,7 @@ STATIC_URL = '/static/'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR,  'templates'),
 )
+
+
+BROKER_URL = 'amqp://guest:guest@192.168.99.100:32772//'
+CELERY_RESULT_BACKEND = 'redis://192.168.99.100:32775/1'
