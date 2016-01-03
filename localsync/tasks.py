@@ -1,7 +1,11 @@
 import time
 from django.utils import timezone
+from django.db.models import  Q
 from celery import task,chain
+
 import redis
+
+from django.conf import settings
 
 from . import models
 
@@ -9,7 +13,7 @@ from . import models
 
 
 def createRedisConection():
-    return redis.StrictRedis(host='192.168.99.100', port=32775, db=0)
+    return redis.StrictRedis(host=settings.REDIS_IP, port=settings.REDIS_PORT, db=0)
 
 
 
@@ -19,8 +23,6 @@ def selectIssueRecords():
     timestamp = c.get("timestamp")
     objects = models.Issue1.objects.using('branch').filter(timestamp_system__gte=timestamp)
     splitRecords.delay(objects=objects)
-    objects = models.Issue2.objects.using('branch').filter(timestamp_system__gte=timestamp)
-    splitRecords.delay(objects=objects)
     c.set("timestamp",timezone.now())
 
 
@@ -29,9 +31,7 @@ def selectRecieptRecords():
     c = createRedisConection()
     timestamp = c.get("timestamp_reciept")
     objects = models.Reciept1.objects.using('branch').filter(timestamp_system__gte=timestamp)
-    splitRecords.delay(objects=objects)
-    objects = models.Reciept1.objects.using('branch').filter(timestamp_system__gte=timestamp)
-    splitRecords.delay(objects=objects)
+    splitRecordsRecipt1.delay(objects=objects)
     c.set("timestamp_reciept",timezone.now())
 
 
@@ -43,6 +43,24 @@ def splitRecords(objects):
     for object in objects:
         saveRecords.delay(object=object)
 
+
+
+@task(name="split-records-Issue1")
+def splitRecordsIssue1(objects):
+    for object in objects:
+        saveRecords.delay(object=object)
+        result = models.Issue2.objects.using('branch').filter(Q(code=object.code) & Q(pcenter__pk=object.pcenter.pk) & Q(bilno=object.bilno))
+        splitRecords.delay(result)
+
+
+
+@task(name="split-records-recipt1")
+def splitRecordsRecipt1(objects):
+    for object in objects:
+        saveRecords.delay(object=object)
+        result = models.Reciept2.objects.using('branch').filter(Q(code=object.code) & Q(pcenter__pk=object.pcenter.pk) & Q(bilno=object.bilno))
+        splitRecords.delay(result)
+
 @task(name="save-records")
 def saveRecords(object):
     try:
@@ -51,4 +69,3 @@ def saveRecords(object):
         raise saveRecords.retry(exc=exc, countdown=60)
 
 
-models.Reciept1.objects.using('master').all()

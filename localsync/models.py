@@ -506,7 +506,6 @@ class Issue2(models.Model):
     iscocked = models.NullBooleanField()
     paid = models.NullBooleanField()
     printed = models.NullBooleanField()
-    timestamp_system = models.DateTimeField(auto_now_add=True)
 
 
     class Meta:
@@ -724,7 +723,6 @@ class Reciept2(models.Model):
     inv_temp = models.FloatField(blank=True, null=True)
     avg_cost = models.DecimalField(max_digits=22, decimal_places=8, blank=True, null=True)
     avg_cost2 = models.DecimalField(max_digits=22, decimal_places=8, blank=True, null=True)
-    timestamp_system = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.pk
@@ -732,3 +730,22 @@ class Reciept2(models.Model):
         managed = False
         db_table = 'reciept_2'
         unique_together = (('id', 'code', 'pcenter', 'bilno'),)
+
+
+
+class Issue1Payterms(models.Model):
+    code = models.BigIntegerField()
+    pcenter = models.ForeignKey(Centers, db_column='pcenter')
+    bilno = models.BigIntegerField()
+    id = models.ForeignKey('PaymentTerms', db_column='id')
+    amount = models.FloatField()
+    bnkcomm = models.FloatField(blank=True, null=True)
+    credtnotes_id = models.BigIntegerField(blank=True, null=True)
+    trn_id = models.FloatField(blank=True, null=True)
+    pay_id = models.BigIntegerField()
+    main_paid_cash = models.DecimalField(max_digits=15, decimal_places=3, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'issue_1_payterms'
+        unique_together = (('code', 'pcenter', 'bilno', 'id', 'pay_id'),)

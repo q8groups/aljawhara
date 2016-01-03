@@ -93,7 +93,7 @@ DATABASES = {
     },
       'master': {
         'ENGINE': 'django.db.backends.oracle',
-        'NAME': '192.168.2.132:1521/HEADOFFICE',
+        'NAME': '192.168.2.140:1521/MANARHO',
         'USER': 'gl',
         'PASSWORD': 'gl',
     }
@@ -124,5 +124,7 @@ TEMPLATE_DIRS = (
 )
 
 
-BROKER_URL = 'amqp://guest:guest@192.168.99.100:32772//'
-CELERY_RESULT_BACKEND = 'redis://192.168.99.100:32775/1'
+BROKER_URL = 'redis://127.0.0.1:6379/2'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/1'
+REDIS_IP = '127.0.0.1'
+REDIS_PORT= '6379'
